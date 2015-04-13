@@ -16,7 +16,7 @@ import java.util.HashMap;
  * Created by Андрей on 03.04.2015.
  */
 public class GUIHolder implements ActionListener {
-    private static final String FRAME_HEADER = "TEST";
+    private static final String FRAME_HEADER = "Загрузчик";
     private static final String CHOOSE_ACTION = "Обзор...";
     private static final String PDF_MODE = "PDF";
     private static final String IMAGES_MODE = "Картиночки";
@@ -112,6 +112,7 @@ public class GUIHolder implements ActionListener {
         frame.setVisible(true);
 
         mainFrame = frame;
+        showLicense();
     }
 
     /**
@@ -214,5 +215,17 @@ public class GUIHolder implements ActionListener {
                 worker.startDownloading();
                 break;
         }
+    }
+
+    public void showLicense() {
+        showDialog(JOptionPane.DEFAULT_OPTION, "Лицензия",
+                "Данная программа предоставляет интерфейс для скачивания \n" +
+                        "книг из электронной нефтегазовой библиотеки. Книги могут быть защищены \n" +
+                        "авторскими правами, соответственно, любое распространение материала \n" +
+                        "может преследоваться по закону. Я (разработчик) надеюсь, что \n" +
+                        "скаченный материал будет использован исключительно для личных целей. \n" +
+                        "Вся ответственность за нелегальное копирование возлагается на пользователей. \n" +
+                        "Спасибо!"
+                );
     }
 }
