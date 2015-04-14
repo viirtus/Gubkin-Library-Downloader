@@ -10,6 +10,7 @@ import util.CookieStore;
 
 import javax.swing.*;
 import java.io.IOException;
+import java.net.ProtocolException;
 import java.util.HashMap;
 
 /**
@@ -141,19 +142,22 @@ public class Worker implements Constants {
      */
     public String doLogin() throws IOException {
         logger.info("Oh, seems like we don't have a cookies :( ");
+        try {
+            //form container
+            HashMap<String, String> formData = elibParser.parseLoginForm();
 
-        //form container
-        HashMap<String, String> formData = elibParser.parseLoginForm();
+            //getting login data from gui
+            String[] pair = holder.getLoginData();
 
-        //getting login data from gui
-        String[] pair = holder.getLoginData();
+            //and put it into container
+            formData.put(LOGIN_FORM_NAME, pair[0]);
+            formData.put(LOGIN_FORM_PASSWORD, pair[1]);
 
-        //and put it into container
-        formData.put(LOGIN_FORM_NAME, pair[0]);
-        formData.put(LOGIN_FORM_PASSWORD, pair[1]);
-
-        //return cookie
-        return Request.retrieveLoginCookies(formData);
+            //return cookie
+            return Request.retrieveLoginCookies(formData);
+        } catch (ProtocolException e) {
+            return Request.retrieveLoginCookies(new HashMap<String, String>());
+        }
     }
 
     /**

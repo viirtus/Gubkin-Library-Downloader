@@ -3,9 +3,7 @@ package loader;
 import util.Constants;
 
 import java.io.*;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLConnection;
+import java.net.*;
 import java.rmi.UnknownHostException;
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +21,7 @@ public class Request implements Constants {
      */
     public static String retrieveLoginCookies(HashMap<String, String> params) throws IOException {
         String url = Constants.LOGIN_URL;
+        CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
         HttpURLConnection con = null;
         try {
             URL obj = new URL(url);
@@ -74,6 +73,7 @@ public class Request implements Constants {
      */
     public static String getPage(String path, String cookie) throws IOException {
         HttpURLConnection con = null;
+        CookieHandler.setDefault(new CookieManager(null, CookiePolicy.ACCEPT_ALL));
         try {
             URL obj = new URL(path);
             con = (HttpURLConnection) obj.openConnection();
